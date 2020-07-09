@@ -101,6 +101,7 @@
 		48ADBF2624B63CC50007FC4C /* To-Do Please */ = {
 			isa = PBXGroup;
 			children = (
+				48ADBF5A24B63D7E0007FC4C /* Models */,
 				48ADBF2724B63CC50007FC4C /* AppDelegate.swift */,
 				48ADBF2924B63CC50007FC4C /* SceneDelegate.swift */,
 				48ADBF2B24B63CC50007FC4C /* ViewController.swift */,
@@ -129,6 +130,13 @@
 				48ADBF4E24B63CC70007FC4C /* Info.plist */,
 			);
 			path = "To-Do PleaseUITests";
+			sourceTree = "<group>";
+		};
+		48ADBF5A24B63D7E0007FC4C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

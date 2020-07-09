@@ -59,6 +59,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
     }
     
     func saveTheToDo(toDotitle: String) {
@@ -85,9 +86,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? UITableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else { return UITableViewCell() }
         let aToDo = toDo[indexPath.row]
         cell.textLabel?.text = aToDo.value(forKeyPath: "title") as? String
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let objectToDelete = toDo[indexPath.row]
+            toDo.remove(at: indexPath.row)
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            managedContext.delete(objectToDelete)
+            
+            do{
+              try managedContext.save()
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            catch let error {
+              print("Could not save Deletion \(error)")
+            }
+        }
+        
     }
 }
